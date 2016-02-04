@@ -6,8 +6,10 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use ApiBundle\Services\GoogleSearch;
 
-class ResultsController extends FOSRestController {
+class ResultsController extends FOSRestController
+{
 
     /**
      * This is the documentation description of your method, it will appear
@@ -16,18 +18,23 @@ class ResultsController extends FOSRestController {
      *
      * @ApiDoc(
      *   resource=true,
-     *   description="This is a description of your API method."
+     *   description="This is a description of your API method.",
+     *   https=true
      * )
      * @QueryParam(name="limit", requirements="\d+", default="10", description="Search query string.")
      * @QueryParam(name="search", requirements="[a-z0-9 ]+", nullable=false, description="Search query string.")
      * 
      * @param ParamFetcher $paramFetcher
      */
-    public function getResultsAction(ParamFetcher $paramFetcher) {
-        $search = $paramFetcher->get('search');
+    public function getResultsAction(ParamFetcher $paramFetcher)
+    {
+        $query = $paramFetcher->get('search');
         $limit = $paramFetcher->get('limit');
-        $data = array("hello" => $search,"limit" => $limit);
-        $view = $this->view($data);
+
+        $request = new GoogleSearch($query, $limit);
+        $response = $request->apiRequest();
+        
+        $view = $this->view($response);
         return $this->handleView($view);
     }
 
