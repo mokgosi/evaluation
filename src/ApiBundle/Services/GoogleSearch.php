@@ -14,7 +14,6 @@ class GoogleSearch
     private $url = 'https://www.googleapis.com/customsearch/v1';
     private $key = 'AIzaSyACbXe2p6mcNsXmrDrQQgbY8OcekDdzKbM'; #server key
     private $cx = '012798027873711253779:mvjmc7sibtg';
-    private $query = 'stackoverflow';
 
     public function __construct($query = null, $limit = 10)
     {
@@ -30,7 +29,7 @@ class GoogleSearch
      */
     public function apiRequest($format = 'json')
     {
-        $url = $this->url . '?key=' . $this->key . '&cx=' . $this->cx . '&q=' . $this->query . '&alt=json';
+        $url = $this->url . '?key=' . $this->key . '&cx=' . $this->cx . '&q=' . $this->query . '&alt=json&num='.$this->limit;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -38,5 +37,4 @@ class GoogleSearch
         $results = curl_exec($ch);
         return json_decode($results, true);
     }
-
 }
