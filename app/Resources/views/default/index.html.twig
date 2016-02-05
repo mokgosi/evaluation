@@ -15,7 +15,10 @@
 
             <div id="next">
                 <h2>Search Results</h2>
-                
+                {% for entity in results %}
+                    <h3><a href="entity.link">{{ entity.title}}</a></h3>
+                    <p><a href="entity.link">{{ entity.link}}</a></p>
+                {% endfor %}
             </div>
 
         </div>

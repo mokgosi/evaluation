@@ -20,6 +20,12 @@ $ git clone https://github.com/mokgosi/evaluation.git
 $ cd evaluation
 $ composer update
 
+Assuming you are running the app from PHPs built in server:
+
+navigate to http://localhost:8000/api/doc on the brower to view the API from a sandbox
+
+navigate to http://localhost:8000 to consume api from frontend
+
 
 =======================================================================================================================
 

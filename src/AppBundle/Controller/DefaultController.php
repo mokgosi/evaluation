@@ -37,7 +37,7 @@ class DefaultController extends Controller
      */
     public function searchAction(Request $request)
     {
-        $defaultData = array('keyword' => 'Type your keyword here');
+        $defaultData = array('keyword' => 'Type your keyword here', 'limit' => 'Type number of results to return.');
 
         $form = $this->createFormBuilder($defaultData)
             ->add('keyword', TextType::class)
@@ -51,16 +51,19 @@ class DefaultController extends Controller
             // data is an array with "keyword", "limit"
             $data = $form->getData();
 
+            $google = new GoogleSearch($data['keyword'], $data['limit']);
 
-            echo $request->request->get('keyword');
+            $result = $google->apiRequest();
 
-            // $google = new GoogleSearch($data['keyword'], $data['limit']);
-            dump($data);
+            $results = $result['items'];
+        } else {
+            $results = array();
         }
             
         return $this->render('default/index.html.twig', array(
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
             'form' => $form->createView(),
+            'results' => $results
         ));
     }
 }
