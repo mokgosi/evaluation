@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use ApiBundle\Services\GoogleSearch;
 
@@ -22,7 +23,7 @@ class DefaultController extends Controller
 
         $form = $this->createFormBuilder($defaultData)
             ->add('keyword', TextType::class)
-            ->add('limit', TextType::class)
+            ->add('limit', IntegerType::class)
             ->add('search', SubmitType::class)
             ->getForm();
 
@@ -37,11 +38,11 @@ class DefaultController extends Controller
      */
     public function searchAction(Request $request)
     {
-        $defaultData = array('keyword' => 'Type your keyword here', 'limit' => 'Type number of results to return.');
+        $defaultData = array('keyword' => 'Type your keyword here', 'limit' => 5);
 
         $form = $this->createFormBuilder($defaultData)
             ->add('keyword', TextType::class)
-            ->add('limit', TextType::class)
+            ->add('limit', IntegerType::class)
             ->add('search', SubmitType::class)
             ->getForm();
 
